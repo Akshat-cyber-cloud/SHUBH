@@ -1,0 +1,179 @@
+/* RESET & BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --off-white: #faf8f5;
+    --beige: #f0eae1;
+    --blush: #e8d4d2;
+    --rose: #b07a7a;
+    --wine: #8a4d4d;
+    --dark-wine: #6a3a3a;
+    --charcoal: #1a1818;
+    --gold: #d4af37;
+    --light-gold: rgba(212, 175, 55, 0.3);
+    --transition: 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+    --serif: 'Cormorant Garamond', serif;
+    --sans: 'Inter', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    scroll-snap-type: y mandatory;
+}
+
+body {
+    font-family: var(--sans);
+    background-color: var(--charcoal);
+    color: var(--off-white);
+    overflow-x: hidden;
+    line-height: 1.6;
+    font-weight: 200;
+    cursor: none;
+}
+
+section {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: start;
+    padding: 10rem 0;
+    /* Increased padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+}
+
+/* GLASSMORPHISM - Global Utility */
+.glass-card {
+    background: rgba(26, 24, 24, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 16px;
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* TYPOGRAPHY ENHANCEMENTS */
+h1,
+h2,
+h3,
+.serif {
+    font-family: var(--serif);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.display {
+    font-size: clamp(4rem, 12vw, 12rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--off-white) 30%, var(--gold) 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.display-2 {
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 300;
+    background: linear-gradient(135deg, var(--off-white) 30%, var(--gold) 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.headline {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--gold);
+    /* Fallback */
+    background: linear-gradient(135deg, #fff 10%, #d4af37 60%);
+    /* High contrast gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 2rem;
+    /* Add clear separation */
+    opacity: 1 !important;
+    /* Force visibility */
+    transform: none !important;
+    /* Prevent offset */
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5));
+    /* Make it pop against dark bg */
+}
+
+.large-text {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.2;
+}
+
+.medium-text {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.body-text {
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    font-weight: 300;
+    /* Slightly heavier for readability */
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+    color: rgba(250, 248, 245, 0.9);
+    /* Softer white */
+}
+
+.small-text {
+    font-size: 1rem;
+    font-weight: 200;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* TEXT GLOW EFFECT */
+.text-glow {
+    transition: text-shadow 0.3s ease;
+}
+
+.text-glow:hover {
+    text-shadow: 0 0 20px var(--gold), 0 0 40px rgba(212, 175, 55, 0.3);
+}
+
+/* RESPONSIVENESS - GLOBAL */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+    }
+
+    .display {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .display {
+        font-size: 2.5rem;
+    }
+}

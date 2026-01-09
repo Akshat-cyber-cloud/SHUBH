@@ -1,0 +1,191 @@
+/* LOVE LANGUAGE QUIZ - CREATIVE REDESIGN */
+#love-quiz {
+    background-color: var(--charcoal);
+    padding: 8rem 0;
+    perspective: 1000px;
+}
+
+.quiz-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.quiz-content-wrapper {
+    display: flex;
+    gap: 4rem;
+    margin-top: 4rem;
+    align-items: stretch;
+}
+
+.quiz-question {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(30, 27, 27, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Options Styling */
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.quiz-option {
+    padding: 1.5rem 2rem;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.quiz-option:hover {
+    background: rgba(255, 255, 255, 0.03);
+    padding-left: 2.5rem;
+}
+
+/* Elegant Marker instead of Icon */
+.option-marker {
+    width: 6px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: all 0.4s ease;
+    flex-shrink: 0;
+}
+
+.quiz-option:hover .option-marker {
+    background-color: var(--gold);
+    transform: scale(1.5);
+    box-shadow: 0 0 10px var(--gold);
+}
+
+.quiz-option.selected .option-marker {
+    background-color: var(--gold);
+    width: 12px;
+    height: 12px;
+    /* Square/Diamond? No, simpler */
+    border-radius: 2px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 15px var(--gold);
+}
+
+.quiz-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.4s ease;
+    margin: 0;
+    text-align: left;
+    font-weight: 300;
+}
+
+.quiz-option:hover .quiz-text {
+    color: #fff;
+    transform: translateX(5px);
+}
+
+.quiz-option.selected .quiz-text {
+    color: var(--gold);
+    font-weight: 500;
+}
+
+.quiz-option.dimmed {
+    opacity: 0.3;
+}
+
+.quiz-option.dimmed:hover {
+    opacity: 0.8;
+}
+
+/* Result Section */
+.quiz-result-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+}
+
+.result-placeholder {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.01);
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    position: relative;
+}
+
+.result-placeholder::before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.result-placeholder::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.result-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem !important;
+    background: linear-gradient(tobottom right, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.98));
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    animation: fadeInScale 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.result-card::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    pointer-events: none;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 900px) {
+    .quiz-content-wrapper {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .quiz-result-container {
+        min-height: 300px;
+    }
+}

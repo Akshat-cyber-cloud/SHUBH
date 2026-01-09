@@ -1,0 +1,120 @@
+.story-section {
+    min-height: 100vh;
+    /* Changed from height to min-height to prevent overlap */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8rem 0;
+    /* consistent padding */
+}
+
+.story-content {
+    text-align: center;
+    max-width: 900px;
+    padding: 2rem;
+    position: relative;
+    z-index: 3;
+    display: flex;
+    /* ensuring vertical stack */
+    flex-direction: column;
+    gap: 1.5rem;
+    /* gap between elements */
+}
+
+.story-date {
+    font-size: 1rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 2rem;
+    opacity: 0.6;
+    font-weight: 200;
+    display: block;
+    color: var(--gold);
+}
+
+.story-line {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    font-weight: 200;
+    opacity: 0;
+    transform: translateY(20px);
+    line-height: 1.8;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+    text-align: center;
+    transition: all 1.8s var(--transition);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.story-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.story-highlight {
+    color: var(--gold);
+    font-style: italic;
+    position: relative;
+    display: inline-block;
+}
+
+.story-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.8s var(--transition);
+}
+
+.story-line.visible .story-highlight::after {
+    width: 100%;
+}
+
+/* KISS SECTION */
+#first-kiss {
+    background: linear-gradient(135deg,
+            rgba(26, 24, 24, 0.95) 0%,
+            rgba(138, 77, 77, 0.2) 50%,
+            rgba(26, 24, 24, 0.95) 100%);
+}
+
+.kiss-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* PERFECT MOMENT SECTION */
+#perfect-moment {
+    background: linear-gradient(135deg,
+            rgba(26, 24, 24, 0.95) 0%,
+            rgba(212, 175, 55, 0.1) 50%,
+            rgba(26, 24, 24, 0.95) 100%);
+}
+
+.moment-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+
+.moment-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    z-index: 1;
+}

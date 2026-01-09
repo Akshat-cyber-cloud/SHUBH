@@ -1,0 +1,21 @@
+/* STATEMENT */
+#statement {
+    background-color: var(--charcoal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 6rem 0;
+}
+
+.statement-text {
+    max-width: 1000px;
+    text-align: center;
+}
+
+.statement-line {
+    display: block;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+}

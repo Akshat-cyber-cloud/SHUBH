@@ -1,0 +1,35 @@
+/* CUSTOM CURSOR */
+.cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.2s, width 0.3s, height 0.3s;
+    mix-blend-mode: difference;
+}
+
+.cursor-dot {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+}
+
+@media (max-width: 480px) {
+
+    .cursor,
+    .cursor-dot {
+        display: none;
+    }
+
+    body {
+        cursor: default;
+    }
+}

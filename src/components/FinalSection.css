@@ -1,0 +1,15 @@
+/* FINAL SECTION */
+#final {
+    background-color: var(--charcoal);
+    padding: 8rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.final-content {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+}

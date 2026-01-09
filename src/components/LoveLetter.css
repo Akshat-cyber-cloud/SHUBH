@@ -1,0 +1,45 @@
+/* LOVE LETTER */
+#letter {
+    background-color: var(--charcoal);
+    padding: 8rem 0;
+    position: relative;
+}
+
+.letter-container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.letter-content {
+    background: rgba(26, 24, 24, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 16px;
+    padding: 4rem;
+    font-weight: 200;
+    line-height: 1.9;
+    letter-spacing: 0.02em;
+    min-height: 500px;
+    position: relative;
+    overflow-y: auto;
+    max-height: 70vh;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+}
+
+.letter-content::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari and Opera */
+}
+
+@media (max-width: 480px) {
+    .letter-content {
+        padding: 2rem;
+    }
+}

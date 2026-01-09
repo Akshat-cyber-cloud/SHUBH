@@ -1,0 +1,112 @@
+/* ENHANCED LOVE EFFECTS */
+.floating-heart {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    animation: floatUp 20s linear infinite;
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+    text-shadow: 0 0 20px currentColor;
+}
+
+.floating-flower {
+    position: absolute;
+    font-size: 1.2rem;
+    opacity: 0.1;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    animation: floatRotate 30s linear infinite;
+    filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.2));
+}
+
+.sparkle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    animation: sparkle 3s infinite;
+    box-shadow: 0 0 10px var(--gold);
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.3;
+    animation: particleFloat 10s linear infinite;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.5;
+    }
+
+    90% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes floatRotate {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.1;
+    }
+
+    100% {
+        transform: translateY(-100px) rotate(720deg);
+        opacity: 0.1;
+    }
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.3;
+    }
+
+    90% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(-100px) translateX(100px);
+        opacity: 0;
+    }
+}

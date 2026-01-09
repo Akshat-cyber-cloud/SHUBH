@@ -1,0 +1,139 @@
+/* Note: this CSS is only an example, you can overlay whatever you want using the activeItem logic */
+
+#infinite-grid-menu-canvas {
+    cursor: grab;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    outline: none;
+}
+
+#infinite-grid-menu-canvas:active {
+    cursor: grabbing;
+}
+
+.action-button {
+    position: absolute;
+    left: 50%;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    display: grid;
+    place-items: center;
+    background: var(--gold);
+    /* Theme Color */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    transition: all 0.3s ease;
+}
+
+.action-button:hover {
+    transform: translateX(-50%) scale(1.1) !important;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+}
+
+.face-title {
+    user-select: none;
+    position: absolute;
+    font-family: 'Cinzel', serif;
+    /* Theme Font */
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 3rem;
+    left: 1.6em;
+    top: 50%;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.action-button-icon {
+    user-select: none;
+    position: relative;
+    color: var(--charcoal);
+    /* Theme Color */
+    top: 0;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.face-title {
+    position: absolute;
+    top: 50%;
+    transform: translate(20%, -50%);
+}
+
+.face-title.active {
+    opacity: 1;
+    transform: translate(20%, -50%);
+    pointer-events: auto;
+    transition: 0.5s ease;
+}
+
+.face-title.inactive {
+    pointer-events: none;
+    opacity: 0;
+    transition: 0.1s ease;
+}
+
+.face-description {
+    user-select: none;
+    position: absolute;
+    max-width: 250px;
+    /* Better width */
+    top: 50%;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.5;
+    right: 5%;
+    /* Adjusted position */
+    text-align: right;
+    transform: translate(0, -50%);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.face-description.active {
+    opacity: 0.9;
+    transform: translate(0, -50%);
+    /* Fixed transform */
+    pointer-events: auto;
+    transition: 0.5s ease;
+}
+
+.face-description.inactive {
+    pointer-events: none;
+    transform: translate(20px, -50%);
+    opacity: 0;
+    transition: 0.1s ease;
+}
+
+.action-button {
+    position: absolute;
+    left: 50%;
+}
+
+.action-button.active {
+    bottom: 3.8em;
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+    transition: 0.5s ease;
+}
+
+.action-button.inactive {
+    bottom: -80px;
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.1s ease;
+}
+
+@media (max-width: 1500px) {
+
+    .face-title,
+    .face-description {
+        display: none;
+    }
+}

@@ -1,0 +1,38 @@
+/* MUSIC PLAYER */
+#music {
+    background-color: var(--charcoal);
+    padding: 8rem 0;
+    position: relative;
+}
+
+.music-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.music-visualizer {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    margin: 3rem 0;
+}
+
+.visualizer-bar {
+    position: absolute;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to top, var(--gold), var(--rose));
+    border-radius: 2px 2px 0 0;
+    animation: visualizerPulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes visualizerPulse {
+    from {
+        height: 10px;
+    }
+
+    to {
+        height: 100px;
+    }
+}
