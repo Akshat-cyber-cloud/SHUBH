@@ -1,18 +1,26 @@
 /* INTRO - ENHANCED CINEMATIC */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
 #intro {
     min-height: 100vh;
-    background: linear-gradient(135deg,
-            var(--charcoal) 0%,
-            var(--dark-wine) 30%,
-            var(--charcoal) 70%,
-            var(--dark-wine) 100%);
-    background-size: 400% 400%;
-    animation: gradientShift 20s ease infinite;
+    background: linear-gradient(-45deg,
+            #3a0e12,
+            /* Deep Ruby */
+            #2d1235,
+            /* Rich Plum */
+            #0f1729,
+            /* Midnight Blue */
+            #2b0a1a
+            /* Dark Magenta */
+        );
+    background-size: 300% 300%;
+    animation: gradientShift 15s ease infinite;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     position: relative;
+    overflow: hidden;
 }
 
 #intro::before {
@@ -22,51 +30,91 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /* background:
-        radial-gradient(circle at 20% 50%, rgba(180, 122, 122, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(138, 77, 77, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 40% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
-    animation: floatBackground 40s linear infinite; */
     pointer-events: none;
-}
-
-#intro::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Subtle noise texture */
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" opacity="0.03"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
-    opacity: 0.4;
-    pointer-events: none;
+    z-index: 1;
+    /* Vignette */
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
 }
 
 .intro-content {
     position: relative;
-    z-index: 200;
-    /* Above ImageTrail */
+    z-index: 10;
     width: 100%;
-    pointer-events: auto;
+    pointer-events: none;
+    /* Allow clicks/hovers to pass through to ImageTrail */
+    padding: 0 2rem;
 }
 
-.intro-line {
-    display: block;
-    margin-bottom: 2rem;
-    position: relative;
-    overflow: hidden;
+.intro-text-wrapper {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem;
+    /* Larger base size */
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+    color: #e0e0e0;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    /* More space between rows */
 }
 
-.intro-text {
+/* Tablet / Desktop Scale */
+@media (min-width: 768px) {
+    .intro-text-wrapper {
+        font-size: 8.5rem;
+        /* Massive on desktop */
+        gap: 2rem;
+    }
+}
+
+.intro-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* Allow wrapping on very small screens */
+    width: 100%;
+}
+
+.word {
     display: inline-block;
-    /* transform: translateY(100%);  Disable initial hidden state if JS fails */
-    opacity: 1 !important;
-    /* Force visible */
-    transform: translateY(0) !important;
-    color: #ffffff !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    font-weight: 500;
+    margin: 0 1rem;
+    /* More space between words */
+    position: relative;
+    /* Subtle glow on words */
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+    pointer-events: auto;
+    /* Enable hover interaction */
+    transition: transform 0.3s ease, filter 0.3s ease, text-shadow 0.3s ease;
+    cursor: default;
+    /* Optional: or pointer if clickable */
+}
+
+.word:hover {
+    transform: scale(1.15) translateY(-5px);
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+    color: #fff;
+    /* Brighten text */
+    z-index: 20;
+    /* Ensure it pops over neighbors */
+}
+
+.highlight-word {
+    color: #fff;
+    font-style: italic;
+    /* Stronger glow for the key word */
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.line-break {
+    width: 100%;
+    height: 1rem;
+    display: block;
 }
 
 .scroll-hint {
@@ -75,28 +123,28 @@
     left: 50%;
     transform: translateX(-50%);
     opacity: 0.8;
-    /* Force visible */
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    z-index: 200;
+    z-index: 10;
 }
 
 .scroll-hint span {
-    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    font-weight: 200;
-    opacity: 0.8;
-    color: #fff;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .scroll-hint::after {
     content: '';
     width: 1px;
     height: 60px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
     animation: scrollHint 3s infinite;
 }
 
@@ -111,16 +159,6 @@
 
     100% {
         background-position: 0% 50%;
-    }
-}
-
-@keyframes floatBackground {
-    0% {
-        transform: translate(0, 0);
-    }
-
-    100% {
-        transform: translate(-20%, -20%);
     }
 }
 

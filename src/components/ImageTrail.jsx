@@ -71,8 +71,8 @@ class ImageTrailVariant1 {
       const rect = this.container.getBoundingClientRect();
       this.mousePos = getLocalPointerPos(ev, rect);
     };
-    container.addEventListener('mousemove', handlePointerMove);
-    container.addEventListener('touchmove', handlePointerMove);
+    window.addEventListener('mousemove', handlePointerMove);
+    window.addEventListener('touchmove', handlePointerMove);
 
     const initRender = ev => {
       const rect = this.container.getBoundingClientRect();
@@ -81,11 +81,11 @@ class ImageTrailVariant1 {
 
       requestAnimationFrame(() => this.render());
 
-      container.removeEventListener('mousemove', initRender);
-      container.removeEventListener('touchmove', initRender);
+      window.removeEventListener('mousemove', initRender);
+      window.removeEventListener('touchmove', initRender);
     };
-    container.addEventListener('mousemove', initRender);
-    container.addEventListener('touchmove', initRender);
+    window.addEventListener('mousemove', initRender);
+    window.addEventListener('touchmove', initRender);
   }
 
   render() {
@@ -175,8 +175,8 @@ class ImageTrailVariant2 {
       const rect = container.getBoundingClientRect();
       this.mousePos = getLocalPointerPos(ev, rect);
     };
-    container.addEventListener('mousemove', handlePointerMove);
-    container.addEventListener('touchmove', handlePointerMove);
+    window.addEventListener('mousemove', handlePointerMove);
+    window.addEventListener('touchmove', handlePointerMove);
 
     const initRender = ev => {
       const rect = container.getBoundingClientRect();
@@ -185,11 +185,11 @@ class ImageTrailVariant2 {
 
       requestAnimationFrame(() => this.render());
 
-      container.removeEventListener('mousemove', initRender);
-      container.removeEventListener('touchmove', initRender);
+      window.removeEventListener('mousemove', initRender);
+      window.removeEventListener('touchmove', initRender);
     };
-    container.addEventListener('mousemove', initRender);
-    container.addEventListener('touchmove', initRender);
+    window.addEventListener('mousemove', initRender);
+    window.addEventListener('touchmove', initRender);
   }
 
   render() {

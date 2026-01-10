@@ -1,39 +1,50 @@
 import React, { useEffect, useRef } from 'react';
-
+import gsap from 'gsap';
 import ImageTrail from './ImageTrail';
 import './Intro.css';
 
 const Intro = () => {
-    const text1Ref = useRef(null);
-    const text2Ref = useRef(null);
-    const text3Ref = useRef(null);
+    const containerRef = useRef(null);
+    const textRef = useRef(null);
     const scrollHintRef = useRef(null);
 
     useEffect(() => {
-        const texts = [text1Ref.current, text2Ref.current, text3Ref.current];
+        const tl = gsap.timeline();
+        const words = textRef.current.querySelectorAll('.word');
 
-        texts.forEach((text, index) => {
-            if (text) {
-                setTimeout(() => {
-                    text.style.transition = 'transform 2.5s var(--transition), opacity 2.5s var(--transition)';
-                    text.style.transform = 'translateY(0)';
-                    text.style.opacity = '1';
-                }, index * 1800);
-            }
+        // Initial state
+        gsap.set(words, {
+            y: 30,
+            opacity: 0,
+            filter: 'blur(10px)'
         });
 
-        if (scrollHintRef.current) {
-            setTimeout(() => {
-                scrollHintRef.current.style.transition = 'opacity 2s var(--transition)';
-                scrollHintRef.current.style.opacity = '1';
-            }, 6000);
-        }
+        gsap.set(scrollHintRef.current, { opacity: 0 });
+
+        // Animation sequence
+        tl.to(words, {
+            duration: 1.5,
+            y: 0,
+            opacity: 1,
+            filter: 'blur(0px)',
+            stagger: 0.25,
+            ease: 'power3.out'
+        })
+            .to(scrollHintRef.current, {
+                duration: 1.5,
+                opacity: 1,
+                ease: "sine.inOut"
+            }, "-=0.5");
+
+        return () => {
+            tl.kill();
+        };
     }, []);
 
     return (
-        <section id="intro">
-            {/* ImageTrail Overlay */}
-            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'hidden', zIndex: 1 }}>
+        <section id="intro" ref={containerRef} style={{ position: 'relative', overflow: 'hidden' }}>
+            {/* Creative Background: ImageTrail Overlay */}
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
                 <ImageTrail
                     items={[
                         'https://picsum.photos/id/287/300/300',
@@ -49,26 +60,27 @@ const Intro = () => {
                 />
             </div>
 
-            <div className="container">
+            <div className="container" style={{ position: 'relative', zIndex: 2 }}>
                 <div className="intro-content">
-                    <div className="intro-line">
-                        <h1 className="display">
-                            <span className="intro-text" ref={text1Ref}>Some things</span>
-                        </h1>
-                    </div>
-                    <div className="intro-line">
-                        <h1 className="display">
-                            <span className="intro-text" ref={text2Ref}>aren't meant</span>
-                        </h1>
-                    </div>
-                    <div className="intro-line">
-                        <h1 className="display">
-                            <span className="intro-text" ref={text3Ref}>to be rushed.</span>
-                        </h1>
+                    <div ref={textRef} className="intro-text-wrapper">
+                        <div className="intro-row">
+                            <span className="word">Some</span>
+                            <span className="word">things</span>
+                            <span className="word">aren't</span>
+                        </div>
+                        <div className="intro-row">
+                            <span className="word">meant</span>
+                            <span className="word">to</span>
+                            <span className="word">be</span>
+                        </div>
+                        <div className="intro-row">
+                            <span className="word highlight-word">rushed.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="scroll-hint" ref={scrollHintRef}>
+
+            <div className="scroll-hint" ref={scrollHintRef} style={{ zIndex: 2 }}>
                 <span>Begin our story</span>
             </div>
         </section>

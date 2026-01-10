@@ -1,0 +1,46 @@
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #050505;
+    /* Deep black/charcoal */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.loader-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    /* Constrain height to stack/overlay */
+}
+
+.loader-content h1 {
+    position: absolute;
+    /* Stack them on top of each other */
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    letter-spacing: 0.5rem;
+    color: var(--gold);
+    /* Use themed gold if available, else fallback */
+    text-transform: uppercase;
+    opacity: 0;
+    /* Hidden by default for GSAP */
+    margin: 0;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+    .loader-content h1 {
+        font-size: 6rem;
+    }
+}

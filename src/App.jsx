@@ -1,12 +1,13 @@
-import React from 'react';
-import Effects from './components/Effects';
+import React, { useState, useEffect } from 'react';
+
 import CustomCursor from './components/CustomCursor';
+import Loader from './components/Loader';
 import Intro from './components/Intro';
 import Statement from './components/Statement';
 import Timeline from './components/Timeline';
 import StorySection from './components/StorySection';
 import LoveQuiz from './components/LoveQuiz';
-import PromiseGarden from './components/PromiseGarden';
+import GiftBox from './components/GiftBox';
 import SecretGallery from './components/SecretGallery';
 import MusicPlayer from './components/MusicPlayer';
 import LoveLetter from './components/LoveLetter';
@@ -14,10 +15,23 @@ import TimeCapsule from './components/TimeCapsule';
 import FinalSection from './components/FinalSection';
 
 function App() {
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    const loaderTimer = setTimeout(() => {
+      setShowLoader(false);
+    }, 4200);
+
+    return () => {
+      clearTimeout(loaderTimer);
+    };
+  }, []);
+
   return (
     <div className="app">
+      <Loader showLoader={showLoader} />
       <CustomCursor />
-      <Effects />
+
 
       <Intro />
       <Statement />
@@ -80,7 +94,7 @@ function App() {
       </StorySection>
 
       <LoveQuiz />
-      <PromiseGarden />
+      <GiftBox />
       <SecretGallery />
       <MusicPlayer />
       <LoveLetter />
