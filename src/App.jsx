@@ -13,6 +13,7 @@ import MusicPlayer from './components/MusicPlayer';
 import LoveLetter from './components/LoveLetter';
 import TimeCapsule from './components/TimeCapsule';
 import FinalSection from './components/FinalSection';
+import ScrollVideoPopup from './components/ScrollVideoPopup';
 
 function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -58,6 +59,8 @@ function App() {
         <p className="story-line">Your presence was enough—more than enough. In that silence, I learned that the deepest conversations often happen without words, in the quiet understanding between two souls who just fit perfectly together like pieces of a puzzle we didn't know we were solving.</p>
         <p className="story-line" style={{ marginTop: '2rem', fontStyle: 'italic' }}>The day after our first kiss, we discovered that love speaks loudest in silence, and safety feels like your hand in mine while the world continues around us, unnoticed and unimportant.</p>
       </StorySection>
+
+      <ScrollVideoPopup />
 
       {/* Home */}
       <StorySection
