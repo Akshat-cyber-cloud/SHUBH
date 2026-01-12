@@ -3,6 +3,13 @@ import gsap from 'gsap';
 import ImageTrail from './ImageTrail';
 import './Intro.css';
 
+import img1 from '../assets/WhatsApp Image 2026-01-12 at 02.05.20.jpeg';
+import img2 from '../assets/WhatsApp Image 2026-01-12 at 02.05.21.jpeg';
+import img3 from '../assets/WhatsApp Image 2026-01-12 at 02.05.22 (1).jpeg';
+import img4 from '../assets/WhatsApp Image 2026-01-12 at 02.05.22 (2).jpeg';
+import img5 from '../assets/WhatsApp Image 2026-01-12 at 02.05.22.jpeg';
+import img6 from '../assets/WhatsApp Image 2026-01-12 at 02.07.57.jpeg';
+
 const Intro = () => {
     const containerRef = useRef(null);
     const textRef = useRef(null);
@@ -46,16 +53,7 @@ const Intro = () => {
             {/* Creative Background: ImageTrail Overlay */}
             <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
                 <ImageTrail
-                    items={[
-                        'https://picsum.photos/id/287/300/300',
-                        'https://picsum.photos/id/1001/300/300',
-                        'https://picsum.photos/id/1025/300/300',
-                        'https://picsum.photos/id/1026/300/300',
-                        'https://picsum.photos/id/1027/300/300',
-                        'https://picsum.photos/id/1028/300/300',
-                        'https://picsum.photos/id/1029/300/300',
-                        'https://picsum.photos/id/1030/300/300',
-                    ]}
+                    items={[img1, img2, img3, img4, img5, img6]}
                     variant={1}
                 />
             </div>
@@ -76,6 +74,7 @@ const Intro = () => {
                         <div className="intro-row">
                             <span className="word highlight-word">rushed.</span>
                         </div>
+                        <span className="hover-hint-text">Hover to feel the vibe</span>
                     </div>
                 </div>
             </div>

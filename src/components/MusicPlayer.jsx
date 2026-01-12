@@ -63,12 +63,23 @@ const MusicPlayer = () => {
             }
         };
 
+        const handleAudioControl = (e) => {
+            const { action } = e.detail;
+            if (action === 'pause') {
+                setIsPlaying(false);
+            } else if (action === 'play') {
+                setIsPlaying(true);
+            }
+        };
+
         document.addEventListener('click', handleInteraction);
         document.addEventListener('scroll', handleInteraction);
+        document.addEventListener('audio-control', handleAudioControl);
 
         return () => {
             document.removeEventListener('click', handleInteraction);
             document.removeEventListener('scroll', handleInteraction);
+            document.removeEventListener('audio-control', handleAudioControl);
         };
     }, []);
 
@@ -96,7 +107,8 @@ const MusicPlayer = () => {
         <section id="music">
             {/* Force Interaction Overlay if blocked */}
             {isBlocked && (
-                <div
+                <button
+                    className="enable-music-btn"
                     onClick={() => {
                         if (audioRef.current) {
                             audioRef.current.play();
@@ -104,23 +116,9 @@ const MusicPlayer = () => {
                             setIsBlocked(false);
                         }
                     }}
-                    style={{
-                        position: 'fixed',
-                        bottom: '20px',
-                        right: '20px',
-                        zIndex: 9999,
-                        background: 'rgba(0,0,0,0.8)',
-                        padding: '15px 25px',
-                        borderRadius: '30px',
-                        border: '1px solid var(--gold)',
-                        color: 'var(--gold)',
-                        cursor: 'pointer',
-                        boxShadow: '0 0 20px rgba(212, 175, 55, 0.3)',
-                        animation: 'pulse 2s infinite'
-                    }}
                 >
-                    🎵 Tap to Enable Music
-                </div>
+                    Enable Experience
+                </button>
             )}
             <div className="container">
                 <div className="music-container">

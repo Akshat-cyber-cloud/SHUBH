@@ -1,0 +1,108 @@
+#time-together {
+    padding: 100px 0;
+    position: relative;
+    /* Clean dark background or inherit from body */
+}
+
+.timer-wrapper {
+    text-align: center;
+    padding: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle glow effect */
+.timer-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.timer-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+}
+
+.timer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+}
+
+.timer-value {
+    font-family: 'Bodoni Moda', serif;
+    /* Or system serif */
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--off-white, #f0f0f0);
+    line-height: 1;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.timer-value.highlight {
+    color: var(--gold, #D4AF37);
+}
+
+.timer-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 1rem;
+    opacity: 0.6;
+    color: var(--off-white, #f0f0f0);
+}
+
+.timer-separator {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 3rem;
+    color: var(--gold, #D4AF37);
+    margin-bottom: 2rem;
+    /* Align vaguely with numbers */
+    opacity: 0.8;
+}
+
+.timer-footer {
+    margin-top: 3rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    opacity: 0.5;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .timer-value {
+        font-size: 2.5rem;
+    }
+
+    .timer-separator {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .timer-item {
+        min-width: 60px;
+    }
+
+    .timer-grid {
+        gap: 0.5rem;
+    }
+}

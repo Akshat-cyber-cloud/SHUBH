@@ -599,8 +599,8 @@ class InfiniteGridMenu {
   constructor(canvas, items, onActiveItemChange, onMovementChange, onInit = null, scale = 1.0) {
     this.canvas = canvas;
     this.items = items || [];
-    this.onActiveItemChange = onActiveItemChange || (() => {});
-    this.onMovementChange = onMovementChange || (() => {});
+    this.onActiveItemChange = onActiveItemChange || (() => { });
+    this.onMovementChange = onMovementChange || (() => { });
     this.scaleFactor = scale;
     this.camera.position[2] = 3 * scale;
     this.#init(onInit);
@@ -698,34 +698,110 @@ class InfiniteGridMenu {
 
     const itemCount = Math.max(1, this.items.length);
     this.atlasSize = Math.ceil(Math.sqrt(itemCount));
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement('canvas'); // Temp canvas for initial layout
     const ctx = canvas.getContext('2d');
     const cellSize = 512;
 
     canvas.width = this.atlasSize * cellSize;
     canvas.height = this.atlasSize * cellSize;
 
+    this.videos = []; // Store video details for frame updates
+
     Promise.all(
       this.items.map(
-        item =>
+        (item, index) =>
           new Promise(resolve => {
-            const img = new Image();
-            img.crossOrigin = 'anonymous';
-            img.onload = () => resolve(img);
-            img.src = item.image;
+            if (item.type === 'video') {
+              const video = document.createElement('video');
+              video.src = item.image;
+              video.crossOrigin = 'anonymous';
+              video.muted = true;
+              video.loop = true;
+              video.playsInline = true;
+              video.autoplay = true;
+
+              console.log('Loading video:', item.image);
+
+              video.onloadeddata = () => {
+                console.log('Video loaded data:', item.image);
+                video.play().catch(e => console.error('Video play failed:', e));
+                resolve({ type: 'video', element: video, index });
+              };
+              video.onerror = (e) => {
+                console.error('Failed to load video:', item.image, e);
+                resolve(null);
+              };
+            } else {
+              const img = new Image();
+              img.crossOrigin = 'anonymous';
+              img.onload = () => resolve({ type: 'image', element: img, index });
+              img.onerror = () => {
+                console.error('Failed to load image:', item.image);
+                resolve(null);
+              };
+              img.src = item.image;
+            }
           })
       )
-    ).then(images => {
-      images.forEach((img, i) => {
+    ).then(loadedItems => {
+      loadedItems.forEach(loaded => {
+        if (!loaded) return;
+
+        const i = loaded.index;
         const x = (i % this.atlasSize) * cellSize;
         const y = Math.floor(i / this.atlasSize) * cellSize;
-        ctx.drawImage(img, x, y, cellSize, cellSize);
+
+        if (loaded.type === 'video') {
+          this.videos.push({
+            element: loaded.element,
+            x,
+            y,
+            width: cellSize,
+            height: cellSize
+          });
+          // Draw initial frame if possible
+          ctx.drawImage(loaded.element, x, y, cellSize, cellSize);
+        } else {
+          ctx.drawImage(loaded.element, x, y, cellSize, cellSize);
+        }
       });
 
       gl.bindTexture(gl.TEXTURE_2D, this.tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
       gl.generateMipmap(gl.TEXTURE_2D);
     });
+  }
+
+  #updateVideoTextures() {
+    const gl = this.gl;
+    if (this.videos && this.videos.length > 0) {
+      gl.bindTexture(gl.TEXTURE_2D, this.tex);
+      this.videos.forEach(video => {
+        if (video.element.readyState >= 2) { // HAVE_CURRENT_DATA
+          // Upload current video frame to specific spot in atlas
+          // Using texSubImage2D with the video element directly
+          gl.texSubImage2D(
+            gl.TEXTURE_2D,
+            0, // level
+            video.x, // xoffset
+            video.y, // yoffset
+            video.width, // width - needed? specs say format/type imply size or element provides it? 
+            // WebGL 2 texSubImage2D signatures are tricky. 
+            // gl.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, source);
+            // HTMLVideoElement is a valid source
+            video.height,
+            gl.RGBA,
+            gl.UNSIGNED_BYTE,
+            video.element
+          );
+        }
+      });
+      // Mipmaps might look weird if we don't regenerate, but regenerating every frame is expensive.
+      // For now, let's skip genMipmap per frame and see quality. 
+      // Or we can use linear filtering min/mag and no mipmaps for video dynamicness.
+      // But we set up mipmaps in init. Let's try regenerating if performance allows.
+      // gl.generateMipmap(gl.TEXTURE_2D); 
+    }
   }
 
   #initDiscInstances(count) {
@@ -758,6 +834,9 @@ class InfiniteGridMenu {
   #animate(deltaTime) {
     const gl = this.gl;
     this.control.update(deltaTime, this.TARGET_FRAME_DURATION);
+
+    // Update video textures
+    this.#updateVideoTextures();
 
     let positions = this.instancePositions.map(p => vec3.transformQuat(vec3.create(), p, this.control.orientation));
     const scale = 0.25;

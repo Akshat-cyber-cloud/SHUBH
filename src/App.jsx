@@ -11,6 +11,7 @@ import GiftBox from './components/GiftBox';
 import SecretGallery from './components/SecretGallery';
 import MusicPlayer from './components/MusicPlayer';
 import LoveLetter from './components/LoveLetter';
+import TimeTogether from './components/TimeTogether';
 import TimeCapsule from './components/TimeCapsule';
 import FinalSection from './components/FinalSection';
 import ScrollVideoPopup from './components/ScrollVideoPopup';
@@ -101,6 +102,7 @@ function App() {
       <SecretGallery />
       <MusicPlayer />
       <LoveLetter />
+      <TimeTogether />
       <TimeCapsule />
       <FinalSection />
     </div>

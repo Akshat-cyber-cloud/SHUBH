@@ -2,6 +2,16 @@ import React, { useState } from 'react';
 import InfiniteMenu from './InfiniteMenu';
 import './SecretGallery.css';
 
+
+import img1 from '../assets1/WhatsApp Image 2026-01-12 at 02.09.42 (1).jpeg';
+import img2 from '../assets1/WhatsApp Image 2026-01-12 at 02.09.42.jpeg';
+import img3 from '../assets1/WhatsApp Image 2026-01-12 at 02.13.13.jpeg';
+import img5 from '../assets1/WhatsApp Image 2026-01-12 at 02.14.38.jpeg';
+import vid1 from '../assets1/motion_picture.mp4';
+import imgNew1 from '../assets1/WhatsApp Image 2026-01-11 at 01.56.41.jpeg';
+import imgNew2 from '../assets1/WhatsApp Image 2026-01-12 at 02.07.57.jpeg';
+
+
 const SecretGallery = () => {
     const [isUnlocked, setIsUnlocked] = useState(false);
     const [password, setPassword] = useState('');
@@ -50,28 +60,47 @@ const SecretGallery = () => {
 
     const items = [
         {
-            image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1000&auto=format&fit=crop',
+            image: vid1,
             link: '#',
-            title: 'First Connection',
-            description: 'The moment our stars aligned.'
+            title: 'Our Motion Picture',
+            description: 'Every second with you is a movie.',
+            type: 'video'
         },
         {
-            image: 'https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=1000&auto=format&fit=crop',
+            image: img1,
             link: '#',
-            title: 'Blossoming Love',
-            description: 'Watching us grow every single day.'
+            title: 'My Shining Star',
+            description: 'You light up my darkest days.'
         },
         {
-            image: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=1000&auto=format&fit=crop',
+            image: img2,
             link: '#',
-            title: 'Golden Hours',
-            description: 'Time stands still when I am with you.'
+            title: 'The Moment I Knew',
+            description: 'My heart whispered your name.'
         },
         {
-            image: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1000&auto=format&fit=crop',
+            image: img3,
             link: '#',
-            title: 'By Your Side',
-            description: 'The safest place in the world.'
+            title: 'In Your Eyes',
+            description: 'I found my forever home.'
+        },
+        {
+            image: imgNew1,
+            link: '#',
+            title: 'Pure Joy',
+            description: 'Your smile makes everything better.'
+        },
+        {
+            image: img5,
+            link: '#',
+            title: 'Endless Love',
+            description: 'Growing stronger with every beat.'
+        },
+        {
+            image: imgNew2,
+            link: '#',
+            title: 'Together Forever',
+            description: 'No place I\'d rather be.'
         }
     ];
 
@@ -109,7 +138,7 @@ const SecretGallery = () => {
                     ) : (
                         <div style={{
                             height: '600px',
-                            width: '100%',  
+                            width: '100%',
                             position: 'relative',
                             marginTop: '4rem',
                             borderRadius: '30px',
