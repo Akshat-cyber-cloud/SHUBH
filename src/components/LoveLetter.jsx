@@ -40,8 +40,8 @@ Forever and always`;
                         if (contentRef.current) {
                             contentRef.current.scrollTop = contentRef.current.scrollHeight;
                         }
-                        const speed = Math.random() * 80 + 60;
-                        setTimeout(typeWriter, speed / 10); // Sped up for demo responsiveness
+                        const speed = Math.random() * 50 + 50;
+                        setTimeout(typeWriter, speed); // Adjusted for natural typing speed
                     }
                 };
                 typeWriter();

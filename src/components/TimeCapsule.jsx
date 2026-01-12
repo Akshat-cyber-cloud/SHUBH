@@ -2,91 +2,124 @@ import React, { useState, useEffect } from 'react';
 import './TimeCapsule.css';
 
 const TimeCapsule = () => {
-    const [date, setDate] = useState('');
     const [message, setMessage] = useState('');
-    const [capsules, setCapsules] = useState([]);
+    const [isLocked, setIsLocked] = useState(false);
+    const [timeLeft, setTimeLeft] = useState({});
+    const [targetDate, setTargetDate] = useState(null);
 
     useEffect(() => {
-        const saved = JSON.parse(localStorage.getItem('timeCapsules') || '[]');
-        setCapsules(saved);
+        // Calculate next Dec 30
+        const now = new Date();
+        let nextBday = new Date(now.getFullYear(), 11, 30); // Month is 0-indexed: 11 = Dec
 
-        // Min date tomorrow
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const dateInput = document.getElementById('capsuleDate');
-        if (dateInput) dateInput.min = tomorrow.toISOString().split('T')[0];
+        if (now > nextBday) {
+            nextBday.setFullYear(now.getFullYear() + 1);
+        }
+
+        setTargetDate(nextBday);
+
+        // Load saved state
+        const savedData = localStorage.getItem('bdayCapsule');
+        if (savedData) {
+            const parsed = JSON.parse(savedData);
+            setMessage(parsed.message);
+            setIsLocked(true);
+        }
+
+        const timer = setInterval(() => {
+            if (!nextBday) return;
+
+            const difference = nextBday - new Date();
+
+            if (difference > 0) {
+                setTimeLeft({
+                    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                    minutes: Math.floor((difference / 1000 / 60) % 60),
+                    seconds: Math.floor((difference / 1000) % 60)
+                });
+            } else {
+                // Birthday arrived!
+                setIsLocked(false);
+                setTimeLeft({});
+            }
+        }, 1000);
+
+        return () => clearInterval(timer);
     }, []);
 
-    const saveCapsule = () => {
-        if (!date || !message.trim()) {
-            alert('Please select a future date and write a message');
+    const handleLock = () => {
+        if (!message.trim()) {
+            alert("Please write a message first!");
             return;
         }
 
-        const capsuleDate = new Date(date);
-        const today = new Date();
-
-        if (capsuleDate <= today) {
-            alert('Please select a future date');
-            return;
-        }
-
-        const newCapsule = {
-            date,
+        const data = {
             message,
-            created: new Date().toISOString()
+            lockedAt: new Date().toISOString()
         };
 
-        const updated = [...capsules, newCapsule];
-        setCapsules(updated);
-        localStorage.setItem('timeCapsules', JSON.stringify(updated));
-
-        setDate('');
-        setMessage('');
-        alert('Message saved for ' + date);
+        localStorage.setItem('bdayCapsule', JSON.stringify(data));
+        setIsLocked(true);
     };
 
     return (
         <section id="time-capsule">
             <div className="container">
-                <div className="capsule-container">
-                    <h2 className="headline">Our Time Capsule</h2>
-                    <p className="medium-text" style={{ marginTop: '1rem', opacity: 0.7 }}>Send a message to our future</p>
+                <div className="capsule-content">
+                    <h2 className="headline" style={{ marginBottom: '0.5rem' }}>For Your Next Birthday</h2>
+                    <p className="subtitle" style={{ color: 'var(--gold)', letterSpacing: '2px', textTransform: 'uppercase', fontSize: '0.9rem', marginBottom: '3rem' }}>
+                        OPEN THIS ON 30 DECEMBER
+                    </p>
 
-                    <div className="glass-card" style={{ padding: '3rem', marginTop: '3rem' }}>
-                        <input
-                            type="date"
-                            className="capsule-date"
-                            id="capsuleDate"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                        />
-                        <textarea
-                            className="capsule-input"
-                            placeholder="Write a message to open in the future..."
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                        ></textarea>
-                        <button
-                            className="glass-card"
-                            onClick={saveCapsule}
-                            style={{ border: 'none', padding: '1rem 3rem', cursor: 'pointer', color: 'var(--off-white)', background: 'rgba(26, 24, 24, 0.7)' }}
-                        >
-                            Save for Future
-                        </button>
+                    <div className="countdown-container">
+                        <div className="time-block">
+                            <span className="time-number">{timeLeft.days || 0}</span>
+                            <span className="time-label">DAYS</span>
+                        </div>
+                        <div className="separator">:</div>
+                        <div className="time-block">
+                            <span className="time-number">{timeLeft.hours || 0}</span>
+                            <span className="time-label">HOURS</span>
+                        </div>
+                        <div className="separator">:</div>
+                        <div className="time-block">
+                            <span className="time-number">{timeLeft.minutes || 0}</span>
+                            <span className="time-label">MINUTES</span>
+                        </div>
+                        <div className="separator">:</div>
+                        <div className="time-block">
+                            <span className="time-number">{timeLeft.seconds || 0}</span>
+                            <span className="time-label">SECONDS</span>
+                        </div>
                     </div>
 
-                    {capsules.length > 0 && (
-                        <div id="capsuleList" style={{ marginTop: '3rem' }}>
-                            <h3 className="medium-text" style={{ marginBottom: '2rem' }}>Your Time Capsules</h3>
-                            {capsules.map((cap, i) => (
-                                <div key={i} className="glass-card" style={{ padding: '2rem', marginBottom: '1rem' }}>
-                                    <p className="small-text" style={{ color: 'var(--gold)' }}>To open on {cap.date}</p>
-                                    <p className="body-text" style={{ marginTop: '1rem' }}>{cap.message}</p>
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    <div className="message-container glass-card">
+                        {!isLocked ? (
+                            <>
+                                <p className="instruction-text">
+                                    Write a message for yourself (or for us) to read on your next birthday.
+                                    Once you lock it, it stays hidden until the big day.
+                                </p>
+                                <textarea
+                                    className="capsule-textarea"
+                                    placeholder="Write your secret message here..."
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                ></textarea>
+                                <button className="lock-btn" onClick={handleLock}>
+                                    🔒 Lock Until Birthday
+                                </button>
+                            </>
+                        ) : (
+                            <div className="locked-view">
+                                <div className="lock-icon">🔒</div>
+                                <h3>This message is locked</h3>
+                                <p>Strictly for 30th December. No peeking!</p>
+                                <p className="sub-note">"ye sb i will not be there..open this on ur next day"</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </section>

@@ -705,6 +705,12 @@ class InfiniteGridMenu {
     canvas.width = this.atlasSize * cellSize;
     canvas.height = this.atlasSize * cellSize;
 
+    // Create a shared scratch canvas for video resizing
+    this.videoCanvas = document.createElement('canvas');
+    this.videoCanvas.width = cellSize;
+    this.videoCanvas.height = cellSize;
+    this.videoCtx = this.videoCanvas.getContext('2d');
+
     this.videos = []; // Store video details for frame updates
 
     Promise.all(
@@ -778,29 +784,23 @@ class InfiniteGridMenu {
       gl.bindTexture(gl.TEXTURE_2D, this.tex);
       this.videos.forEach(video => {
         if (video.element.readyState >= 2) { // HAVE_CURRENT_DATA
-          // Upload current video frame to specific spot in atlas
-          // Using texSubImage2D with the video element directly
+          // Draw video frame to scratch canvas to resize it to 512x512
+          this.videoCtx.drawImage(video.element, 0, 0, this.videoCanvas.width, this.videoCanvas.height);
+
+          // Upload the scratch canvas
           gl.texSubImage2D(
             gl.TEXTURE_2D,
             0, // level
             video.x, // xoffset
             video.y, // yoffset
-            video.width, // width - needed? specs say format/type imply size or element provides it? 
-            // WebGL 2 texSubImage2D signatures are tricky. 
-            // gl.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, source);
-            // HTMLVideoElement is a valid source
-            video.height,
             gl.RGBA,
             gl.UNSIGNED_BYTE,
-            video.element
+            this.videoCanvas
           );
         }
       });
-      // Mipmaps might look weird if we don't regenerate, but regenerating every frame is expensive.
-      // For now, let's skip genMipmap per frame and see quality. 
-      // Or we can use linear filtering min/mag and no mipmaps for video dynamicness.
-      // But we set up mipmaps in init. Let's try regenerating if performance allows.
-      // gl.generateMipmap(gl.TEXTURE_2D); 
+      // Optional: Regenerate mipmaps if visual artifacts appear
+      // gl.generateMipmap(gl.TEXTURE_2D);
     }
   }
 
