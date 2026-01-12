@@ -1,35 +1,58 @@
 /* CUSTOM CURSOR */
-.cursor {
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.2s, width 0.3s, height 0.3s;
-    mix-blend-mode: difference;
+body {
+    cursor: none;
+    /* Hide default cursor */
 }
 
 .cursor-dot {
     position: fixed;
-    width: 4px;
-    height: 4px;
-    background: var(--gold);
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background-color: var(--gold, #D4AF37);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
-    transition: transform 0.1s;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
-@media (max-width: 480px) {
+.cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+}
 
-    .cursor,
-    .cursor-dot {
+/* Hover State */
+body.hovering .cursor-outline {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(212, 175, 55, 0.1);
+    border-color: transparent;
+    backdrop-filter: blur(2px);
+}
+
+body.hovering .cursor-dot {
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+
+    .cursor-dot,
+    .cursor-outline {
         display: none;
     }
 
     body {
-        cursor: default;
+        cursor: auto;
     }
 }

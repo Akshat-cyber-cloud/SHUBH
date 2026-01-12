@@ -4,7 +4,8 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
     z-index: 9999;
     opacity: 0;
     pointer-events: none;
@@ -12,6 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
 .video-popup-overlay.active {
@@ -21,34 +23,43 @@
 
 .video-container {
     width: 100%;
-    height: 100%;
+    max-width: 900px;
+    /* Limit width */
+    aspect-ratio: 16 / 9;
+    /* maintain video aspect ratio */
+    height: auto;
     position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    /* Subtle gold border */
+    background: #000;
 }
 
 .popup-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .skip-button {
     position: absolute;
-    bottom: 30px;
-    right: 30px;
-    background: rgba(0, 0, 0, 0.5);
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.6);
     border: 1px solid var(--gold, #D4AF37);
-    /* Fallback to gold hex if var missing */
     color: var(--gold, #D4AF37);
-    padding: 10px 24px;
+    padding: 8px 20px;
     border-radius: 30px;
     cursor: pointer;
     font-family: inherit;
-    /* Inherit font from parent/global */
-    font-size: 14px;
+    font-size: 13px;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     z-index: 10001;
 }
 

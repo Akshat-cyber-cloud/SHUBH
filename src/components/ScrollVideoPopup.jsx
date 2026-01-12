@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ScrollVideoPopup.css';
 
-import scrollVideo from '../assets2/scroll_video.mp4';
-
-const ScrollVideoPopup = () => {
+const ScrollVideoPopup = ({ videoSrc }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     // Track actual video playback state for overlay visibility
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -107,7 +105,7 @@ const ScrollVideoPopup = () => {
                             autoPlay
                         // Removed muted to allow sound, user requested background music stop
                         >
-                            <source src={scrollVideo} type="video/mp4" />
+                            <source src={videoSrc} type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                         <button

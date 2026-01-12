@@ -2,91 +2,72 @@ import React, { useEffect, useRef } from 'react';
 import './CustomCursor.css';
 
 const CustomCursor = () => {
-    const cursorRef = useRef(null);
-    const cursorDotRef = useRef(null);
+    const dotRef = useRef(null);
+    const outlineRef = useRef(null);
+
+    // Use refs for mutable values to avoid re-renders
+    const mousePos = useRef({ x: 0, y: 0 });
+    const outlinePos = useRef({ x: 0, y: 0 });
 
     useEffect(() => {
-        const cursor = cursorRef.current;
-        const cursorDot = cursorDotRef.current;
+        const dot = dotRef.current;
+        const outline = outlineRef.current;
 
-        const moveCursor = (e) => {
-            if (cursor && cursorDot) {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-                cursorDot.style.left = e.clientX + 'px';
-                cursorDot.style.top = e.clientY + 'px';
+        const handleMouseMove = (e) => {
+            mousePos.current = { x: e.clientX, y: e.clientY };
+
+            // Update dot position immediately
+            if (dot) {
+                dot.style.left = `${e.clientX}px`;
+                dot.style.top = `${e.clientY}px`;
             }
         };
 
-        const mouseDown = () => {
-            if (cursor) cursor.style.transform = 'scale(0.5)';
-        };
-
-        const mouseUp = () => {
-            if (cursor) cursor.style.transform = 'scale(1)';
-        };
-
-        // Add interactivity for hover elements
-        const handleMouseEnter = () => {
-            if (cursor) {
-                cursor.style.width = '40px';
-                cursor.style.height = '40px';
-                cursor.style.borderColor = 'var(--rose)';
-            }
-        };
-
-        const handleMouseLeave = () => {
-            if (cursor) {
-                cursor.style.width = '20px';
-                cursor.style.height = '20px';
-                cursor.style.borderColor = 'var(--gold)';
-            }
-        };
-
-        document.addEventListener('mousemove', moveCursor);
-        document.addEventListener('mousedown', mouseDown);
-        document.addEventListener('mouseup', mouseUp);
-
-        // Attach hover listeners dynamically to specific elements is tricky in React without context or global observer.
-        // For now, let's rely on standard CSS hover or manual attachment if needed.
-        // Ideally, we'd use a context or data attributes.
-        // We can add a global delegation listener?
         const handleMouseOver = (e) => {
-            if (e.target.matches('button, .moment-card, .quiz-option, .promise-flower, .tree-leaf, a')) {
-                handleMouseEnter();
+            if (e.target.matches('a, button, .clickable, input, textarea, select, [role="button"], .course-card, .story-section')) {
+                document.body.classList.add('hovering');
             } else {
-                // We can't easily detect "leave" for delegation without knowing if we left *to* valid element
-                // But we can check on every mouseover if target is NOT interactive.
-                // Simpler: use CSS for cursor changes if possible, but this is custom div cursor.
-                // Let's attach to document and check target.
+                document.body.classList.remove('hovering');
             }
         };
 
-        // Better implementation for hover state: check target on mousemove/over
-        const checkHover = (e) => {
-            const isHoverable = e.target.closest('button, .moment-card, .quiz-option, .promise-flower, .tree-leaf, a, .cursor-hover');
-            if (isHoverable) {
-                handleMouseEnter();
-            } else {
-                handleMouseLeave();
+        // For smoother check, we can check computed style cursor: pointer? 
+        // But explicit tags are safer for performance.
+
+        let animationFrameId;
+
+        const animatecursor = () => {
+            // Lerp (Linear Interpolation) for the outline
+            const ease = 0.15; // increased from standard 0.1 for snappier but still smooth feel
+
+            outlinePos.current.x += (mousePos.current.x - outlinePos.current.x) * ease;
+            outlinePos.current.y += (mousePos.current.y - outlinePos.current.y) * ease;
+
+            if (outline) {
+                outline.style.left = `${outlinePos.current.x}px`;
+                outline.style.top = `${outlinePos.current.y}px`;
             }
+
+            animationFrameId = requestAnimationFrame(animatecursor);
         };
 
-        document.addEventListener('mouseover', checkHover);
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseover', handleMouseOver);
 
+        animatecursor();
 
         return () => {
-            document.removeEventListener('mousemove', moveCursor);
-            document.removeEventListener('mousedown', mouseDown);
-            document.removeEventListener('mouseup', mouseUp);
-            document.removeEventListener('mouseover', checkHover);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseover', handleMouseOver);
+            cancelAnimationFrame(animationFrameId);
+            document.body.classList.remove('hovering');
         };
     }, []);
 
     return (
         <>
-            <div className="cursor" ref={cursorRef}></div>
-            <div className="cursor-dot" ref={cursorDotRef}></div>
+            <div ref={outlineRef} className="cursor-outline"></div>
+            <div ref={dotRef} className="cursor-dot"></div>
         </>
     );
 };

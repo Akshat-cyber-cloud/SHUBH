@@ -16,6 +16,10 @@ import TimeCapsule from './components/TimeCapsule';
 import FinalSection from './components/FinalSection';
 import ScrollVideoPopup from './components/ScrollVideoPopup';
 
+import video1 from './assets2/Video1.mp4';
+import video2 from './assets2/Video2 (2).mp4';
+
+
 function App() {
   const [showLoader, setShowLoader] = useState(true);
 
@@ -61,7 +65,7 @@ function App() {
         <p className="story-line" style={{ marginTop: '2rem', fontStyle: 'italic' }}>The day after our first kiss, we discovered that love speaks loudest in silence, and safety feels like your hand in mine while the world continues around us, unnoticed and unimportant.</p>
       </StorySection>
 
-      <ScrollVideoPopup />
+      <ScrollVideoPopup videoSrc={video1} />
 
       {/* Home */}
       <StorySection
@@ -102,6 +106,7 @@ function App() {
       <SecretGallery />
       <MusicPlayer />
       <LoveLetter />
+      <ScrollVideoPopup videoSrc={video2} />
       <TimeTogether />
       <TimeCapsule />
       <FinalSection />

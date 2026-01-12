@@ -10,7 +10,6 @@ const TimeTogether = () => {
     });
 
     useEffect(() => {
-        // Start date: January 31, 2020
         const startDate = new Date('2020-01-31T00:00:00');
 
         const timer = setInterval(() => {
@@ -66,6 +65,6 @@ const TimeTogether = () => {
             </div>
         </section>
     );
-};
+ };
 
 export default TimeTogether;
