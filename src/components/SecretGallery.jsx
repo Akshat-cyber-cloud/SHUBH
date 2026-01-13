@@ -7,9 +7,16 @@ import img1 from '../assets1/WhatsApp Image 2026-01-12 at 02.09.42 (1).jpeg';
 import img2 from '../assets1/WhatsApp Image 2026-01-12 at 02.09.42.jpeg';
 import img3 from '../assets1/WhatsApp Image 2026-01-12 at 02.13.13.jpeg';
 import img5 from '../assets1/WhatsApp Image 2026-01-12 at 02.14.38.jpeg';
-import vid1 from '../assets1/motion_picture.mp4';
+
 import imgNew1 from '../assets1/WhatsApp Image 2026-01-11 at 01.56.41.jpeg';
 import imgNew2 from '../assets1/WhatsApp Image 2026-01-12 at 02.07.57.jpeg';
+import newVideo from '../assets1/WhatsApp Video 2026-01-13 at 18.53.51.mp4';
+
+import assetImg1 from '../assets/WhatsApp Image 2026-01-12 at 02.05.20.jpeg';
+import assetImg2 from '../assets/WhatsApp Image 2026-01-12 at 02.05.21.jpeg';
+import assetImg3 from '../assets/WhatsApp Image 2026-01-12 at 02.05.22 (1).jpeg';
+import assetImg4 from '../assets/WhatsApp Image 2026-01-12 at 02.05.22 (2).jpeg';
+import assetImg5 from '../assets/WhatsApp Image 2026-01-12 at 02.05.22.jpeg';
 
 
 const SecretGallery = () => {
@@ -59,11 +66,12 @@ const SecretGallery = () => {
     };
 
     const items = [
+
         {
-            image: vid1,
+            image: newVideo,
             link: '#',
-            title: 'Our Motion Picture',
-            description: 'Every second with you is a movie.',
+            title: 'Our Journey',
+            description: 'Moving forward together.',
             type: 'video'
         },
         {
@@ -101,6 +109,36 @@ const SecretGallery = () => {
             link: '#',
             title: 'Together Forever',
             description: 'No place I\'d rather be.'
+        },
+        {
+            image: assetImg1,
+            link: '#',
+            title: 'Beautiful Soul',
+            description: 'Your kindness shines through.'
+        },
+        {
+            image: assetImg2,
+            link: '#',
+            title: 'Unforgettable',
+            description: 'Memories we make together.'
+        },
+        {
+            image: assetImg3,
+            link: '#',
+            title: 'My Happiness',
+            description: 'You are the reason for my smile.'
+        },
+        {
+            image: assetImg4,
+            link: '#',
+            title: 'Cherished',
+            description: 'Holding onto this forever.'
+        },
+        {
+            image: assetImg5,
+            link: '#',
+            title: 'Serendipity',
+            description: 'The best thing that happened to me.'
         }
     ];
 

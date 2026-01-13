@@ -1,13 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import bgMusic from '../assets/bg-music.mp3';
+import secondSong from '../assets/Tumhi_Dekho_Naa_-_Instrumental_(mp3.pm).mp3';
 import './MusicPlayer.css';
 
 const MusicPlayer = () => {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(true);
     const [volume, setVolume] = useState(0.7);
+    const [currentSongIndex, setCurrentSongIndex] = useState(0);
     const visualizerRef = useRef(null);
     const [isBlocked, setIsBlocked] = useState(false);
+
+    const songs = [bgMusic, secondSong];
+
+    const handleNext = () => {
+        setCurrentSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
+    };
 
     useEffect(() => {
         // Create visualizer bars
@@ -92,14 +100,14 @@ const MusicPlayer = () => {
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
                         console.log("Play interrupted or failed:", error);
-                        setIsPlaying(false);
+                        // Don't auto-pause here for song changes, just log
                     });
                 }
             } else {
                 audioRef.current.pause();
             }
         }
-    }, [isPlaying, volume]);
+    }, [isPlaying, volume, currentSongIndex]);
 
     const togglePlay = () => setIsPlaying(!isPlaying);
 
@@ -131,7 +139,7 @@ const MusicPlayer = () => {
                             <button className="player-btn glass-card" onClick={togglePlay} style={{ padding: '0.5rem 1.5rem', cursor: 'pointer', border: 'none', color: 'var(--off-white)' }}>
                                 {isPlaying ? 'Pause' : 'Play'}
                             </button>
-                            <button className="player-btn glass-card" style={{ padding: '0.5rem 1.5rem', cursor: 'pointer', border: 'none', color: 'var(--off-white)' }}>
+                            <button className="player-btn glass-card" onClick={handleNext} style={{ padding: '0.5rem 1.5rem', cursor: 'pointer', border: 'none', color: 'var(--off-white)' }}>
                                 Next
                             </button>
                             <input
@@ -144,9 +152,12 @@ const MusicPlayer = () => {
                                 style={{ width: '150px' }}
                             />
                         </div>
-                        <audio ref={audioRef} loop playsInline>
-                            <source src={bgMusic} type="audio/mpeg" />
-                        </audio>
+                        <audio
+                            ref={audioRef}
+                            src={songs[currentSongIndex]}
+                            playsInline
+                            onEnded={handleNext}
+                        />
                     </div>
                 </div>
             </div>
