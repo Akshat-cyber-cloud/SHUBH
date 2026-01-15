@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import LoveBackground from './LoveBackground';
 import './StorySection.css';
 
 const StorySection = ({ id, className, title, date, children, contentStyle }) => {
@@ -29,6 +30,7 @@ const StorySection = ({ id, className, title, date, children, contentStyle }) =>
 
     return (
         <section id={id} className={`story-section ${className || ''}`} ref={sectionRef}>
+            <LoveBackground />
             <div className="container">
                 {id === 'first-kiss' ? (
                     <div className="kiss-container">

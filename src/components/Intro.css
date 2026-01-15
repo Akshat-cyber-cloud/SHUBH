@@ -4,14 +4,14 @@
 #intro {
     min-height: 100vh;
     background: linear-gradient(-45deg,
-            #0a0a0a,
-            /* Deep Black */
-            #1a0b14,
-            /* Dark Plum */
-            #050814,
-            /* Midnight Navy */
-            #12050b
-            /* Deepest Rose */
+            #6b0f1a,
+            /* Deep Ruby */
+            #b91372,
+            /* Jazzberry Jam */
+            #d6336c,
+            /* Pink */
+            #6b0f1a
+            /* Deep Ruby */
         );
     background-size: 300% 300%;
     animation: gradientShift 15s ease infinite;

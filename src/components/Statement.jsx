@@ -1,55 +1,51 @@
 import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Statement.css';
 
 const Statement = () => {
+    const containerRef = useRef(null);
     const line1Ref = useRef(null);
     const line2Ref = useRef(null);
 
     useEffect(() => {
-        if (line1Ref.current) {
-            setTimeout(() => {
-                line1Ref.current.style.transition = 'all 1.5s var(--transition)';
-                line1Ref.current.style.opacity = '1';
-                line1Ref.current.style.transform = 'translateY(0)';
-            }, 500);
-        }
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
 
-        if (line2Ref.current) {
-            setTimeout(() => {
-                line2Ref.current.style.transition = 'all 1.5s var(--transition)';
-                line2Ref.current.style.opacity = '1';
-                line2Ref.current.style.transform = 'translateY(0)';
-            }, 1500);
-        }
-    }, []);
+        const lines = [line1Ref.current, line2Ref.current];
 
-    // Note: Original code used setTimeout, but typically you'd want IntersectionObserver here too if it's below the fold.
-    // However, the original code called initStatement() capable of running on load (assuming it is visible or just timed).
-    // Given its position after Intro, it might be visible.
-    // Let's add IntersectionObserver to be safe/better.
-
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Trigger animations already handled by timeout relative to load? 
-                    // The original code InitStatement was called on DOMContentLoaded.
-                    // If we want it to animate when scrolled into view:
-                    if (entry.target.id === 'statement') {
-                        // Reset opacity/transform if we want re-trigger? Usually run once.
-                        // Actually, let's keep the timeout based logic but trigger it only when section is visible is better UX.
-                        // But strictly following original logic: it ran on load.
-                        // But 'below fold' elements running on load is bad.
-                        // Let's enhance it with Observer.
-                    }
-                }
-            });
+        // Initial state
+        gsap.set(lines, {
+            y: 50,
+            opacity: 0,
+            filter: 'blur(10px)'
         });
-        // Keeping it simple to match original behavior for now: timed after mount.
+
+        // Animation with ScrollTrigger
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 70%", // Starts when top of section hits 70% of viewport
+                toggleActions: "play none none reverse" // Reverses when scrolling back up
+            }
+        });
+
+        tl.to(lines, {
+            duration: 1.5,
+            y: 0,
+            opacity: 1,
+            filter: 'blur(0px)',
+            stagger: 0.8, // 0.8s delay between lines
+            ease: 'power2.out'
+        });
+
+        return () => {
+            tl.kill();
+        };
     }, []);
 
     return (
-        <section id="statement">
+        <section id="statement" ref={containerRef}>
             <div className="container">
                 <div className="statement-text">
                     <h2 className="display-2 statement-line" id="line1" ref={line1Ref}>I didn't want to wish you on time.</h2>

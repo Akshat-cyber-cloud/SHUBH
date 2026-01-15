@@ -2,49 +2,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import './LoveLetter.css';
 
 const LoveLetter = () => {
-    const letterContent = `My dearest kaduu,
+    const letterContent = `Hey kaduu..
 
-There are things in this world that time cannot measure, my love. Like the space between thinking of you and smiling—it's instantaneous, yet it feels like a lifetime of happiness compressed into a single heartbeat. Like the depth of quiet moments that need no words, where just being beside you feels like the entire universe has aligned perfectly in our favor.
+Sbse phle toh belated happy birthday once again, sorry late se present krne ke lie, but left with no other option. Hope ye website tmhe pasand aya hoga, this is not just a website, this is the timeline of our love story from the very starting day - 31st january the day when you walked into my life. From that day my love for you has been increasing day by day no matter on what terms we are, whether we are in contact phase or in non-contact phase. You are the most important person in my life i can say❤️..Love you so muchh betuu. I know sometimes, sometimes ky most of time things aren’t good between us, but jo bhi thoda sa smy hmlog ke bich me cheeze thk rhi hai..usse best aaj tak kuch nai hua hai..na hi experience kiya hai. Aur ky hi mtlb chahe cheezein kitne hi bar bigad jye..at the end humlog sath ho hi jaate hai🫶🏻🫂❤️. To be very honest I am a person jisse apne birthday ki koi excitement ni hai, but the day u have came in my life, i just wish ki boht acha krna hai iske bday pe, i just want to make her happy. And dekho issbar mauka bhi milgya sath me celebrate krne ka bhale hi late se q na mila, I promise i will always make u feel the happiest not just on ur birthdays but on each normal day as well!. Haan i know I am bad at writing letters making those type of efforts as you do, but it doesn’t mean hm krna nai chhahte, i tried but hua nai meres😕, then islie hm soche why not to do things at which I m expert and i made this website for you..which will always be with you doesn’t matter if i will be there or not..this site..this timeline..this love of mine will always be with you..just u have to remember the url. You know in life a person falls in love with a person for two times..for the first time jab starting phase mei..nyi nyi baat chit..attraction, affection ya infatuation jo bhi kehlo this is the first time when people feels love..nd for the second time when they comes to know the real you..tmhri insecurities..tmhri flaws, tmhri perfection, tmhri imperfection…and ye sb jnkr bhi if you are loving the same person again..then that type of love stays my love❤️..and i guess we are in that stage now🫂❤️…No matter what aditi..chahe cheezein kitni bhi bigad jye..I will never give up on you..ye yaad rkhna..as i said earlier also..I’ll always be there for you no matter what terms are we on. I love you so muchh aditi❤️..I like you kaduu more than l've liked anyone in my life. The way I feel for you is rare,insane, and honestly it scares me a little because i don't want to lose you. I don't even know what to call this, but l've fallen so hard.
+Sach toh yeh hai ki i fuckingly love you.
+I've never felt like this before I smile every time your name pops up, and l'd drop everything just to hear your voice. When you text, send a video, or send a picture, my heart skips a beat.
+I can't wait for the day I tell you this looking straight into your eyes. I can't wait to fall asleep in your arms, to cuddle through movie nights, to lie underikes blankets in our backyard and stare at the stars while we hold each other. I love you so much❤️…and to the end I just want to say that I’ll always be there for you..always..
 
-Before you walked into my life, I thought I understood what love was supposed to be. I thought it was about grand gestures, perfect moments, and fairy-tale endings. But loving you, my baby, has taught me what true love actually feels like—it's not in the extraordinary, but in the beautifully ordinary. It's in the way you remember how I take my tea without ever being told, in the sound of your laughter when you're genuinely, unreservedly happy, in the safety of your silence when words feel too heavy to carry alone.
+Not so handsome, not so perfect, But if you ever cry, ever be tensed or feel low, I'll be the one holding you close, Letting you sleep in my arms, until you feel safe enough to smile again.
 
-Loving you showed me that true love is patient—it doesn't rush, it doesn't demand, it simply waits and grows. It's in the gentle understanding that some distances are meant to be bridged with trust rather than physical presence. It's in waking up every single day and choosing you, all over again, even when circumstances try to convince us otherwise.
-
-Do you know what true love feels like, kaduu? It feels like my heart still skipping a beat when I see your name appear on my phone, even after all this time. It feels like the calm that settles over me when I hear your voice after a difficult day. It feels like the future suddenly having color and shape and meaning because you're in it.
-
-You showed me that love isn't about finding someone perfect—it's about seeing all the hidden, imperfect parts of someone and choosing to love them more because of those parts, not despite them. In your eyes, I found not just affection, but a reflection of who I want to become—someone worthy of your incredible love, someone who can love you as deeply and completely as you deserve to be loved.
-
-This isn't about dates on a calendar or birthdays marked in red, baby. It's about every sunrise that reminds me of the light you bring into my life, every star that makes me wish you were here beside me, every song that suddenly has meaning because it whispers of us. It's about the continuous, unbreakable thread of love weaving through what would otherwise be ordinary days, making them extraordinary simply because you exist in them.
-
-So here's to all our moments—the ones we've already lived, the ones we're living now, and the countless ones still waiting to unfold. Here's to the late-night conversations that turned into early morning confessions of dreams and fears. Here's to the distances we've bridged with nothing but love and unwavering determination. Here's to the future we're building together, one day at a time, with patience and trust.
-
-Here's to forever with you, kaduu. Because with you, forever doesn't feel long enough—it feels like just the beginning of something truly beautiful.
-
-Always yours,
-Forever and always`;
+Happiest bdayy aditi❤️🫶🏻🫂`;
 
     const [displayedContent, setDisplayedContent] = useState('');
     const containerRef = useRef(null);
     const contentRef = useRef(null);
-    const hasStartedRef = useRef(false);
+    const [isStarted, setIsStarted] = useState(false);
+    const indexRef = useRef(0);
+    const timeoutRef = useRef(null);
 
+    // 1. Observer Effect: Only sets isStarted to true once.
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && !hasStartedRef.current) {
-                hasStartedRef.current = true;
-                let index = 0;
-                const typeWriter = () => {
-                    if (index < letterContent.length) {
-                        setDisplayedContent(prev => prev + letterContent.charAt(index));
-                        index++;
-                        if (contentRef.current) {
-                            contentRef.current.scrollTop = contentRef.current.scrollHeight;
-                        }
-                        const speed = Math.random() * 50 + 50;
-                        setTimeout(typeWriter, speed); // Adjusted for natural typing speed
-                    }
-                };
-                typeWriter();
+            if (entries[0].isIntersecting) {
+                setIsStarted(true);
+                observer.disconnect(); // Disconnect immediately once started
             }
         }, { threshold: 0.3 });
 
@@ -55,16 +36,33 @@ Forever and always`;
         return () => observer.disconnect();
     }, []);
 
-    // We can't easily concatenate state in loop with closure issue, so index tracking locally is better.
-    // However, setDisplayedContent(prev => ...) works.
-    // The issue above is using `index` which isn't updating in the recursion correctly if defined outside? 
-    // Actually `index` is in closure of `useEffect`. It works. 
-    // BUT `letterContent.charAt(index)` inside `typeWriter` uses the local `index`.
-    // The `index` increments. It seems fine.
+    // 2. Typing Effect: Runs when isStarted is true
+    useEffect(() => {
+        if (!isStarted) return;
 
-    // Correction: `index` increments in the function call stack? No, `index` is a local variable to `useEffect`.
-    // The closure captures the `index` variable. `index++` modifies it. 
-    // It should work.
+        const typeWriter = () => {
+            const currentIndex = indexRef.current;
+            if (currentIndex < letterContent.length) {
+                // Always set content from 0 to current index + 1
+                // This is idempotent: running it twice for same index produces same result
+                setDisplayedContent(letterContent.substring(0, currentIndex + 1));
+                indexRef.current += 1;
+
+                if (contentRef.current) {
+                    contentRef.current.scrollTop = contentRef.current.scrollHeight;
+                }
+
+                const speed = Math.random() * 50 + 50;
+                timeoutRef.current = setTimeout(typeWriter, speed);
+            }
+        };
+
+        typeWriter();
+
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, [isStarted]);
 
     return (
         <section id="letter" ref={containerRef}>

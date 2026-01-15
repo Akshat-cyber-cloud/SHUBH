@@ -39,7 +39,7 @@ function App() {
       <CustomCursor />
 
 
-      <Intro />
+      <Intro startAnimation={!showLoader} />
       <Statement />
       <Timeline />
 
